@@ -11,6 +11,8 @@ import {
   UPDATE_FIELD_EDITOR,
 } from "../constants/actionTypes";
 
+import placeholder from "../imgs/placeholder.png";
+
 const mapStateToProps = (state) => ({
   ...state.editor,
 });
@@ -120,8 +122,8 @@ class Editor extends React.Component {
                     <input
                       className="form-control"
                       type="text"
-                      placeholder="Image url"
-                      value={this.props.image}
+                      placeholder= "Image url"
+                      value={this.props.image? this.props.image: placeholder}
                       onChange={this.changeImage}
                     />
                   </fieldset>
