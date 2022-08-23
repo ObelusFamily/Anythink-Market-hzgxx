@@ -5,6 +5,7 @@ var Comment = mongoose.model("Comment");
 var User = mongoose.model("User");
 var auth = require("../auth");
 const { sendEvent } = require("../../lib/event");
+const fs = require("fs");
 
 // Preload item objects on routes with ':item'
 router.param("item", function(req, res, next, slug) {
@@ -147,6 +148,10 @@ router.post("/", auth.required, function(req, res, next) {
       var item = new Item(req.body.item);
 
       item.seller = user;
+      if ( !item.image) {
+          const placeHolderImg = fs.readFileSync(process.cwd() + '/public/placeholder.png',{encoding:'utf8'});
+          item.image = placeHolderImg;
+      }
 
       return item.save().then(function() {
         sendEvent('item_created', { item: req.body.item })
